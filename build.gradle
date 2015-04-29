@@ -1,0 +1,40 @@
+apply plugin: 'java'
+apply plugin: 'maven'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile 'org.springframework:spring-context:4.0.6.RELEASE'
+    compile 'commons-codec:commons-codec:1.9'
+    compile 'org.apache.httpcomponents:fluent-hc:4.2.1'
+    compile 'org.jsoup:jsoup:1.7.2'
+
+    /* Selenium */
+    compile group: 'org.seleniumhq.selenium', name: 'selenium-java', version: '2.+'
+
+    compile 'com.github.detro.ghostdriver:phantomjsdriver:1.0.3-dev'
+}
+
+jar {
+    manifest {
+        attributes 'Main-Class': 'gunParser.EntryPoint'
+    }
+
+    /*from {
+        configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
+    }   */
+
+    from(configurations.runtime.collect { it.isDirectory() ? it : zipTree(it) }) {
+
+        // remove all signature files
+
+        exclude "META-INF/*.SF"
+
+        exclude "META-INF/*.DSA"
+
+        exclude "META-INF/*.RSA"
+
+    }
+}
