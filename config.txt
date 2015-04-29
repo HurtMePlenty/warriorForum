@@ -1,0 +1,11 @@
+#delay=10
+
+#activity "Growth Hacking"
+
+Hello! You are interested in Growth Hacking.
+My cool message is for you.
+
+#activity "Email Marketing"
+
+Hello! You are interested in Email Marketing.
+My cool message is for you.
