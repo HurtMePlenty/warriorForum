@@ -28,7 +28,7 @@ public enum Loader {
         }
 
         DesiredCapabilities cap = DesiredCapabilities.phantomjs();
-        cap.setCapability("phantomjs.binary.path", "phantomjs.exe");
+        cap.setCapability("phantomjs.binary.path", "phantomjs");
 
         List<String> cliArgsCap = new ArrayList<String>();
         cliArgsCap.add("--web-security=false");
