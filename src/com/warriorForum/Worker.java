@@ -1,6 +1,7 @@
 package com.warriorForum;
 
 
+import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
@@ -8,6 +9,9 @@ import org.openqa.selenium.WebElement;
 
 public enum Worker {
     instance;
+
+    private String lastUser;
+    private String lastUserActivity;
 
 
     public void checkNewUser() {
@@ -22,8 +26,16 @@ public enum Worker {
         WebElement newUserAnchor = webDriver.findElement(By.cssSelector("#collapseobj_forumhome_stats div.smallfont a[href^=\"http://www.warriorforum.com/members/\"]"));
         String userName = newUserAnchor.getText();
 
+        //if last user is null that means that it is first check or previous user was sent a message
+        if (!StringUtils.isEmpty(lastUser) && !lastUser.equals(userName)) {
+            StateService.instance.addUser(lastUser, lastUserActivity, false);
+        }
+
+        lastUser = userName;
+
+
         if (StateService.instance.isNewUser(userName)) {
-            System.out.println(String.format("Last user - %s. It is a new user.", userName));
+            System.out.println(String.format("Last user - %s. Checking activity.", userName));
             String userUrl = newUserAnchor.getAttribute("href");
             webDriver.get(userUrl);
             WebElement lastActivityAnchor;
@@ -43,10 +55,10 @@ public enum Worker {
                     //cool, no login btn
                 }
 
-                StateService.instance.addUser(userName, null, false);
                 return;
             }
             String activityText = lastActivityAnchor.getText();
+            lastUserActivity = activityText;
             String message = ConfigService.instance.getMessageForActivity(activityText);
             System.out.println(String.format("Username - %s   UserActivity - %s", userName, activityText));
             if (message != null) {
@@ -56,8 +68,8 @@ public enum Worker {
                 WebElement sendMessageBtn = webDriver.findElement(By.cssSelector("#qr_submit"));
                 sendMessageBtn.click();
                 StateService.instance.addUser(userName, activityText, true);
-            } else {
-                StateService.instance.addUser(userName, activityText, false);
+                lastUser = null;
+                lastUserActivity = null;
             }
         } else {
             System.out.println(String.format("Last user - %s. We have already worked with this user. Skip it.", userName));

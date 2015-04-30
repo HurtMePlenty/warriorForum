@@ -1,4 +1,6 @@
-#delay=10
+#login=CharliePX
+#password=123123cha
+#delay=20
 
 #activity "Growth Hacking"
 

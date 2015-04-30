@@ -14,8 +14,8 @@ import java.util.List;
 public enum Loader {
     instance;
 
-    private static String login = "CharliePX";
-    private static String pass = "123123cha";
+    //private static String login = "CharliePX";
+    //private static String pass = "123123cha";
 
     //private static String login = "qqq2";
     //private static String pass = "q1w2e3";
@@ -34,6 +34,7 @@ public enum Loader {
         cliArgsCap.add("--web-security=false");
         cliArgsCap.add("--ssl-protocol=any");
         cliArgsCap.add("--ignore-ssl-errors=yes");
+        cliArgsCap.add("--webdriver-loglevel=NONE");
         String[] args = cliArgsCap.toArray(new String[0]);
         cap.setCapability(PhantomJSDriverService.PHANTOMJS_CLI_ARGS, args);
 
@@ -48,8 +49,8 @@ public enum Loader {
             WebElement loginBox = driver.findElement(By.id("navbar_username"));
             WebElement passBox = driver.findElement(By.id("navbar_password"));
 
-            loginBox.sendKeys(login);
-            passBox.sendKeys(pass);
+            loginBox.sendKeys(ConfigService.instance.login);
+            passBox.sendKeys(ConfigService.instance.password);
             WebElement loginBtn = driver.findElement(By.cssSelector("input[value=\"Log in\"]"));
             loginBtn.click();
             //Thread.sleep(500);

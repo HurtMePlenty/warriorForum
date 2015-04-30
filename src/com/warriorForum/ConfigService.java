@@ -9,67 +9,63 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-enum ConfigService
-{
+enum ConfigService {
     instance;
 
     final String configFileName = "config.txt";
     public int delayMiliseconds;
     public Map<String, String> activitiesMap = new HashMap();
 
-    ConfigService()
-    {
-        try
-        {
+    public String login;
+    public String password;
+
+    ConfigService() {
+        try {
             File configFile = new File(configFileName);
-            if (!configFile.exists())
-            {
+            if (!configFile.exists()) {
                 throw new RuntimeException("no config.txt found");
-            } else
-            {
+            } else {
                 List<String> configLines = Files.readLines(configFile, Charsets.UTF_8);
                 StringBuilder activityBuilder = new StringBuilder();
                 String currentActivity = null;
-                for (String configLine : configLines)
-                {
-                    if (configLine.startsWith("#delay"))
-                    {
+                for (String configLine : configLines) {
+                    if (configLine.startsWith("#login")) {
+                        login = configLine.split("=")[1];
+                    }
+                    if (configLine.startsWith("#password")) {
+                        password = configLine.split("=")[1];
+                    }
+                    if (configLine.startsWith("#delay")) {
                         delayMiliseconds = Integer.parseInt(configLine.split("=")[1]) * 1000;
                     }
-                    if (configLine.startsWith("#activity"))
-                    {
-                        if (currentActivity != null)
-                        {
+                    if (configLine.startsWith("#activity")) {
+                        if (currentActivity != null) {
                             activitiesMap.put(currentActivity, activityBuilder.toString());
                         }
                         String activityString = configLine.replace("#activity", "").trim();
                         currentActivity = activityString.substring(1, activityString.length() - 1);
                         activityBuilder.setLength(0);
-                    } else
-                    {
-                        if (currentActivity != null)
-                        {
+                    } else {
+                        if (currentActivity != null) {
                             activityBuilder.append(configLine);
-                            if (activityBuilder.length() > 0)
-                            {
+                            if (activityBuilder.length() > 0) {
                                 activityBuilder.append("\n");
                             }
                         }
                     }
                 }
                 activitiesMap.put(currentActivity, activityBuilder.toString());
+                if (StringUtils.isEmpty(login) || StringUtils.isEmpty(password)) {
+                    throw new RuntimeException("Login and passsword should be specified in the config.txt file");
+                }
             }
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
 
-    public String getMessageForActivity(String activity)
-    {
-        if (activitiesMap.containsKey(activity))
-        {
+    public String getMessageForActivity(String activity) {
+        if (activitiesMap.containsKey(activity)) {
             return activitiesMap.get(activity);
         }
         return null;
