@@ -11,8 +11,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public enum Loader
-{
+public enum Loader {
     instance;
 
     private static String login = "CharliePX";
@@ -23,10 +22,13 @@ public enum Loader
 
     private WebDriver driver;
 
-    public void initializeAndLogin()
-    {
+    public void initializeAndLogin() {
+        if (driver != null) {
+            driver.close();
+        }
+
         DesiredCapabilities cap = DesiredCapabilities.phantomjs();
-        cap.setCapability("phantomjs.binary.path", "phantomjs.exe");
+        cap.setCapability("phantomjs.binary.path", "phantomjs");
 
         List<String> cliArgsCap = new ArrayList<String>();
         cliArgsCap.add("--web-security=false");
@@ -37,8 +39,7 @@ public enum Loader
 
         //cap.setCapability("acceptSslCerts", "true");
         //cap.setCapability("webStorageEnabled", "true");
-        try
-        {
+        try {
             driver = new PhantomJSDriver(cap);
             Date now = new Date();
             driver.get("http://www.warriorforum.com/?t=" + now.getTime());
@@ -51,31 +52,24 @@ public enum Loader
             passBox.sendKeys(pass);
             WebElement loginBtn = driver.findElement(By.cssSelector("input[value=\"Log in\"]"));
             loginBtn.click();
-            Thread.sleep(500);
-            makeScreenShot(driver);
-            Thread.sleep(1000);
-        }
-        catch (Exception e)
-        {
+            //Thread.sleep(500);
+            //makeScreenShot(driver);
+            Thread.sleep(1500);
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
         makeScreenShot(driver);
     }
 
-    public WebDriver driver()
-    {
+    public WebDriver driver() {
         return driver;
     }
 
-    public void makeScreenShot(WebDriver driver)
-    {
+    public void makeScreenShot(WebDriver driver) {
         File scrFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
-        try
-        {
+        try {
             FileUtils.copyFile(scrFile, new File("screenshot.png"));
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }

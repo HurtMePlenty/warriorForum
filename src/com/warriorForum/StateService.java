@@ -14,7 +14,7 @@ public enum StateService
 
     File stateFile;
     final String stateFileName = "state.csv";
-    final String separator = ",";
+    final String separator = ";";
 
     List<User> userList = new ArrayList<User>();
 
@@ -34,6 +34,7 @@ public enum StateService
                 builder.append(separator);
                 builder.append("Received message");
                 builder.append("\n");
+                Files.append(builder.toString(), stateFile, Charsets.UTF_8);
             } else
             {
 
