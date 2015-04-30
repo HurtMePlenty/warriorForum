@@ -1,4 +1,4 @@
-package com.warriorForum;
+package warriorForum;
 
 import com.google.common.io.Files;
 import org.apache.commons.io.Charsets;
@@ -18,6 +18,7 @@ enum ConfigService {
 
     public String login;
     public String password;
+    public String messageTitle;
 
     ConfigService() {
         try {
@@ -37,6 +38,9 @@ enum ConfigService {
                     }
                     if (configLine.startsWith("#delay")) {
                         delayMiliseconds = Integer.parseInt(configLine.split("=")[1]) * 1000;
+                    }
+                    if(configLine.startsWith("#title")){
+                        messageTitle = configLine.replace("#title", "").trim();
                     }
                     if (configLine.startsWith("#activity")) {
                         if (currentActivity != null) {

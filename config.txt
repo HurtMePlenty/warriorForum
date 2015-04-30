@@ -2,6 +2,7 @@
 #password=123123cha
 #delay=20
 
+#title Hello message
 #activity "Growth Hacking"
 
 Hello! You are interested in Growth Hacking.

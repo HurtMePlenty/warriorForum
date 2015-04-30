@@ -19,7 +19,7 @@ dependencies {
 
 jar {
     manifest {
-        attributes 'Main-Class': 'gunParser.EntryPoint'
+        attributes 'Main-Class': 'warriorForum.Main'
     }
 
     /*from {

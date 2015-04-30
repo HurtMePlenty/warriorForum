@@ -1,11 +1,10 @@
-package com.warriorForum;
+package warriorForum;
 
 import com.google.common.io.Files;
 import org.apache.commons.io.Charsets;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public enum StateService

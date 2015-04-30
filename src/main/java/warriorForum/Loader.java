@@ -1,4 +1,4 @@
-package com.warriorForum;
+package warriorForum;
 
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.*;
@@ -28,7 +28,7 @@ public enum Loader {
         }
 
         DesiredCapabilities cap = DesiredCapabilities.phantomjs();
-        cap.setCapability("phantomjs.binary.path", "phantomjs");
+        cap.setCapability("phantomjs.binary.path", "phantomjs.exe");
 
         List<String> cliArgsCap = new ArrayList<String>();
         cliArgsCap.add("--web-security=false");
@@ -59,7 +59,7 @@ public enum Loader {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-        makeScreenShot(driver);
+        //makeScreenShot(driver);
     }
 
     public WebDriver driver() {

@@ -1,4 +1,4 @@
-package com.warriorForum;
+package warriorForum;
 
 import com.google.common.io.Files;
 import org.apache.commons.io.Charsets;
