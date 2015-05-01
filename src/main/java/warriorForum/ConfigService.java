@@ -14,11 +14,12 @@ enum ConfigService {
 
     final String configFileName = "config.txt";
     public int delayMiliseconds;
-    public Map<String, String> activitiesMap = new HashMap();
+
 
     public String login;
     public String password;
     public String messageTitle;
+    public String message;
     public String proxy;
 
     ConfigService() {
@@ -28,41 +29,31 @@ enum ConfigService {
                 throw new RuntimeException("no config.txt found");
             } else {
                 List<String> configLines = Files.readLines(configFile, Charsets.UTF_8);
-                StringBuilder activityBuilder = new StringBuilder();
-                String currentActivity = null;
+                StringBuilder messageBuilder = new StringBuilder();
+
                 for (String configLine : configLines) {
                     if (configLine.startsWith("#login")) {
                         login = configLine.split("=")[1];
-                    }
-                    if (configLine.startsWith("#proxy")) {
+                    } else if (configLine.startsWith("#proxy")) {
                         proxy = configLine.split("=")[1];
-                    }
-                    if (configLine.startsWith("#password")) {
+                    } else if (configLine.startsWith("#password")) {
                         password = configLine.split("=")[1];
-                    }
-                    if (configLine.startsWith("#delay")) {
+                    } else if (configLine.startsWith("#delay")) {
                         delayMiliseconds = Integer.parseInt(configLine.split("=")[1]) * 1000;
-                    }
-                    if (configLine.startsWith("#title")) {
+                    } else if (configLine.startsWith("#title")) {
                         messageTitle = configLine.replace("#title", "").trim();
-                    }
-                    if (configLine.startsWith("#activity")) {
-                        if (currentActivity != null) {
-                            activitiesMap.put(currentActivity, activityBuilder.toString());
-                        }
-                        String activityString = configLine.replace("#activity", "").trim();
-                        currentActivity = activityString.substring(1, activityString.length() - 1);
-                        activityBuilder.setLength(0);
+                    } else if (configLine.startsWith("#message")) {
+
                     } else {
-                        if (currentActivity != null) {
-                            activityBuilder.append(configLine);
-                            if (activityBuilder.length() > 0) {
-                                activityBuilder.append("\n");
-                            }
+                        messageBuilder.append(configLine);
+                        if (messageBuilder.length() > 0) {
+                            messageBuilder.append("\n");
                         }
                     }
                 }
-                activitiesMap.put(currentActivity, activityBuilder.toString());
+
+                message = messageBuilder.toString();
+
                 if (StringUtils.isEmpty(login) || StringUtils.isEmpty(password)) {
                     throw new RuntimeException("Login and passsword should be specified in the config.txt file");
                 }
@@ -72,10 +63,5 @@ enum ConfigService {
         }
     }
 
-    public String getMessageForActivity(String activity) {
-        if (activitiesMap.containsKey(activity)) {
-            return activitiesMap.get(activity);
-        }
-        return null;
-    }
+
 }
