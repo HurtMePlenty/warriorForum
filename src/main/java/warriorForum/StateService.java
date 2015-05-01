@@ -50,9 +50,9 @@ public enum StateService {
         return true;
     }
 
-    public User getNextUserForMessage(){
-        for(User user: userList){
-            if(!user.receivedMessage){
+    public User getNextUserForMessage() {
+        for (User user : userList) {
+            if (!user.receivedMessage) {
                 return user;
             }
         }
@@ -79,7 +79,7 @@ public enum StateService {
         for (User user : userList) {
             builder.append(user.name);
             builder.append(separator);
-            builder.append(user.activity.replace(separator, "-"));
+            builder.append(user.activity == null ? "" : user.activity.replace(separator, "-"));
             builder.append(separator);
             builder.append(user.profileUrl);
             builder.append(separator);
