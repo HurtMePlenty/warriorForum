@@ -48,6 +48,7 @@ public enum Worker {
                     //well, looks like we were logged out
                     Loader.instance.initializeAndLogin();
                     checkNewUser();
+                    return;
                 } catch (NoSuchElementException ex) {
                     //cool, no login btn
                 }
@@ -72,7 +73,16 @@ public enum Worker {
 
         System.out.println(String.format("Sending a message for user - %s", user.name));
 
-        WebElement privateMsgLink = webDriver.findElement(By.cssSelector("#messaging_list a[href^=\"http://www.warriorforum.com/private.php\"]"));
+        webDriver.get(user.profileUrl);
+        WebElement privateMsgLink;
+        try {
+            privateMsgLink = webDriver.findElement(By.cssSelector("#messaging_list a[href^=\"http://www.warriorforum.com/private.php\"]"));
+        } catch (NoSuchElementException e) {
+            //well, looks like we were logged out
+            Loader.instance.initializeAndLogin();
+            sendMessageForUser(webDriver);
+            return;
+        }
         Date now = new Date();
         String url = privateMsgLink.getAttribute("href");
         url += "&vticks=" + now.getTime();

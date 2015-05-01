@@ -1,6 +1,5 @@
 package warriorForum;
 
-import jdk.nashorn.internal.runtime.regexp.joni.Config;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.*;
@@ -58,13 +57,16 @@ public enum Loader {
             WebElement loginBox = driver.findElement(By.id("navbar_username"));
             WebElement passBox = driver.findElement(By.id("navbar_password"));
 
+            Thread.sleep(500);
             loginBox.sendKeys(ConfigService.instance.login);
+            Thread.sleep(500);
             passBox.sendKeys(ConfigService.instance.password);
+            Thread.sleep(500);
             WebElement loginBtn = driver.findElement(By.cssSelector("input[value=\"Log in\"]"));
             loginBtn.click();
             //Thread.sleep(500);
             //makeScreenShot(driver);
-            Thread.sleep(1500);
+            Thread.sleep(500);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
