@@ -32,7 +32,7 @@ public enum Worker {
         String userName = newUserAnchor.getText();
 
         if (StateService.instance.isNewUser(userName)) {
-            System.out.println(String.format("Last user - %s. Checking activity.", userName));
+            System.out.println(String.format("Last user - %s", userName));
             String userUrl = newUserAnchor.getAttribute("href");
             webDriver.get(userUrl);
             WebElement lastActivityAnchor;
@@ -53,6 +53,7 @@ public enum Worker {
                     //cool, no login btn
                 }
                 StateService.instance.addUser(userName, null, userUrl, false);
+                System.out.println(String.format("User %s added", userName));
                 return;
             }
             String activityText = lastActivityAnchor.getText();
