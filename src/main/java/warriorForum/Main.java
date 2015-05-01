@@ -10,6 +10,7 @@ public class Main {
         while (true) {
             try {
                 Worker.instance.checkNewUser();
+                StateService.instance.renderResult();
             } catch (Exception e) {
                 //suppress
                 LoggerService.instance.log(e.getMessage());

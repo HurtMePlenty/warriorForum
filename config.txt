@@ -1,15 +1,9 @@
 #login=CharliePX
-#password=123123cha
+#password=123123cha1
 #delay=20
 #proxy=94.242.238.5:443
 
 #title Hello message
-#activity "Growth Hacking"
-
-Hello! You are interested in Growth Hacking.
-My cool message is for you.
-
-#activity "Email Marketing"
-
-Hello! You are interested in Email Marketing.
-My cool message is for you.
+#message
+Hello. Welcome to our forum!
+[URL="https://www.warriorforum.com"]https://www.warriorforum.com[/URL]

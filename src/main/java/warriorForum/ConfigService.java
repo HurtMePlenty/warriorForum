@@ -34,20 +34,15 @@ enum ConfigService {
                 for (String configLine : configLines) {
                     if (configLine.startsWith("#login")) {
                         login = configLine.split("=")[1];
-                    }
-                    if (configLine.startsWith("#proxy")) {
+                    } else if (configLine.startsWith("#proxy")) {
                         proxy = configLine.split("=")[1];
-                    }
-                    if (configLine.startsWith("#password")) {
+                    } else if (configLine.startsWith("#password")) {
                         password = configLine.split("=")[1];
-                    }
-                    if (configLine.startsWith("#delay")) {
+                    } else if (configLine.startsWith("#delay")) {
                         delayMiliseconds = Integer.parseInt(configLine.split("=")[1]) * 1000;
-                    }
-                    if (configLine.startsWith("#title")) {
+                    } else if (configLine.startsWith("#title")) {
                         messageTitle = configLine.replace("#title", "").trim();
-                    }
-                    if (configLine.startsWith("#message")) {
+                    } else if (configLine.startsWith("#message")) {
 
                     } else {
                         messageBuilder.append(configLine);
