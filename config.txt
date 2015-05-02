@@ -1,6 +1,7 @@
 #login=CharliePX
 #password=123123cha
 #delay=20
+#proxy=94.242.238.5:443
 
 #title Hello message
 #activity "Growth Hacking"

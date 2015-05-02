@@ -1,9 +1,12 @@
 package warriorForum;
 
+import jdk.nashorn.internal.runtime.regexp.joni.Config;
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.*;
 import org.openqa.selenium.phantomjs.PhantomJSDriver;
 import org.openqa.selenium.phantomjs.PhantomJSDriverService;
+import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
 import java.io.File;
@@ -28,13 +31,19 @@ public enum Loader {
         }
 
         DesiredCapabilities cap = DesiredCapabilities.phantomjs();
-        cap.setCapability("phantomjs.binary.path", "phantomjs");
+        cap.setCapability("phantomjs.binary.path", "phantomjs.exe");
 
         List<String> cliArgsCap = new ArrayList<String>();
         cliArgsCap.add("--web-security=false");
         cliArgsCap.add("--ssl-protocol=any");
         cliArgsCap.add("--ignore-ssl-errors=yes");
-        cliArgsCap.add("--webdriver-loglevel=NONE");
+        //cliArgsCap.add("--webdriver-loglevel=NONE");
+        if (!StringUtils.isEmpty(ConfigService.instance.proxy)) {
+            String proxy = ConfigService.instance.proxy;
+            Proxy p = new Proxy();
+            p.setHttpProxy(proxy).setFtpProxy(proxy).setSslProxy(proxy);
+            cap.setCapability(CapabilityType.PROXY, p);
+        }
         String[] args = cliArgsCap.toArray(new String[0]);
         cap.setCapability(PhantomJSDriverService.PHANTOMJS_CLI_ARGS, args);
 

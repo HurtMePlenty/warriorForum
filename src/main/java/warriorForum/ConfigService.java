@@ -19,6 +19,7 @@ enum ConfigService {
     public String login;
     public String password;
     public String messageTitle;
+    public String proxy;
 
     ConfigService() {
         try {
@@ -33,13 +34,16 @@ enum ConfigService {
                     if (configLine.startsWith("#login")) {
                         login = configLine.split("=")[1];
                     }
+                    if (configLine.startsWith("#proxy")) {
+                        proxy = configLine.split("=")[1];
+                    }
                     if (configLine.startsWith("#password")) {
                         password = configLine.split("=")[1];
                     }
                     if (configLine.startsWith("#delay")) {
                         delayMiliseconds = Integer.parseInt(configLine.split("=")[1]) * 1000;
                     }
-                    if(configLine.startsWith("#title")){
+                    if (configLine.startsWith("#title")) {
                         messageTitle = configLine.replace("#title", "").trim();
                     }
                     if (configLine.startsWith("#activity")) {
