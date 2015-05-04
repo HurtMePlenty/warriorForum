@@ -13,7 +13,8 @@ public class Main {
                 StateService.instance.renderResult();
             } catch (Exception e) {
                 //suppress
-                LoggerService.instance.log(e.getMessage());
+                e.printStackTrace();
+                LoggerService.instance.log(e.toString());
             }
             try {
                 Thread.sleep(delay);

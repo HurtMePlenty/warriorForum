@@ -30,13 +30,13 @@ public enum Loader {
         }
 
         DesiredCapabilities cap = DesiredCapabilities.phantomjs();
-        cap.setCapability("phantomjs.binary.path", "phantomjs.exe");
+        cap.setCapability("phantomjs.binary.path", "phantomjs");
 
         List<String> cliArgsCap = new ArrayList<String>();
         cliArgsCap.add("--web-security=false");
         cliArgsCap.add("--ssl-protocol=any");
         cliArgsCap.add("--ignore-ssl-errors=yes");
-        //cliArgsCap.add("--webdriver-loglevel=NONE");
+        cliArgsCap.add("--webdriver-loglevel=NONE");
         if (!StringUtils.isEmpty(ConfigService.instance.proxy)) {
             String proxy = ConfigService.instance.proxy;
             Proxy p = new Proxy();
